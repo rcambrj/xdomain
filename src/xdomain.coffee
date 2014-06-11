@@ -1,11 +1,15 @@
 'use strict'
 
-#add withCredentials to xhr to trick jquery
-#in older browsers into thinking cors is allowed
-xhook.addWithCredentials = true
+if typeof @define is "function" and @define.amd
+  xhook = require "xhook"
+else
+  # assume xhook is available globally
 
 #public methods
 xdomain = (o) ->
+  #add withCredentials to xhr to trick jquery
+  #in older browsers into thinking cors is allowed
+  xhook.addWithCredentials = true
   return unless o
   if o.masters
     addMasters o.masters
@@ -124,6 +128,7 @@ startPostMessage()
 
 #publicise (mini-umd)
 if typeof @define is "function" and @define.amd
-  define "xdomain", ["xhook"], -> xdomain
+  define "xdomain", ["xhook"], (xhook) ->
+    xdomain
 else
   (@exports or @).xdomain = xdomain
