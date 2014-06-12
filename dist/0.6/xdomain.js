@@ -364,7 +364,7 @@ createSocket = function(id, frame) {
     if (ready) {
       return;
     }
-    if (checks++ === xdomain.timeout / CHECK_INTERVAL) {
+    if (checks++ >= xdomain.timeout / CHECK_INTERVAL) {
       warn("Timeout waiting on iframe socket");
     } else {
       setTimeout(check, CHECK_INTERVAL);
